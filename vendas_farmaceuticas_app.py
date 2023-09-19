@@ -26,6 +26,10 @@ import time
 warnings.filterwarnings("ignore")
 
 
+# Defina a variável de ambiente STREAMLIT_SERVER_MAX_UPLOAD_SIZE
+os.environ["STREAMLIT_SERVER_MAX_UPLOAD_SIZE"] = "1500"
+
+
 @st.cache_data
 def ajusta_dados(df):
 
