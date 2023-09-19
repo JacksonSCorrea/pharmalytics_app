@@ -26,10 +26,6 @@ import time
 warnings.filterwarnings("ignore")
 
 
-# Defina a variável de ambiente STREAMLIT_SERVER_MAX_UPLOAD_SIZE
-os.environ["STREAMLIT_SERVER_MAX_UPLOAD_SIZE"] = "1500"
-
-
 @st.cache_data
 def ajusta_dados(df):
 
@@ -1063,78 +1059,353 @@ def main():
     # OPÇÕES DE ORIGEM DOS DADOS
     # =============================================================================================
 
-    opc = st.radio('Origem dos dados',['Carregar do portal','Carregar do computador'],
-                   captions=['Esta opção pode levar até 5min para ser concluída','Esta opção demanda que o download do arquivo já tenha sido feito para o computador'])
+    # opc = st.radio('Origem dos dados',['Carregar do portal','Carregar do computador'],
+                #    captions=['Esta opção pode levar até 5min para ser concluída','Esta opção demanda que o download do arquivo já tenha sido feito para o computador'])
 
-    st.markdown("<hr>", unsafe_allow_html=True)                        # Linha separadora 
+    # st.markdown("<hr>", unsafe_allow_html=True)                        # Linha separadora 
 
-    if opc == 'Carregar do portal':
+    # if opc == 'Carregar do portal':
 
         # =============================================================================================
         # IMPORTAÇÃO DOS DADOS
         # =============================================================================================
 
-        col1, col2, col3= st.columns([1,1,1])   #dentro do parêntes é o tamanho de cada coluna
+        # col1, col2, col3= st.columns([1,1,1])   #dentro do parêntes é o tamanho de cada coluna
 
-        with col1:
-            ano = st.selectbox('Ano', ('2018','2019','2020','2021'))
-            ano=str(ano)
+        # with col1:
+        #     ano = st.selectbox('Ano', ('2018','2019','2020','2021'))
+        #     ano=str(ano)
 
-        with col2:
-            # Dicionário que mapeia nomes de meses para valores numéricos
-            lista_meses = {'Janeiro': 1, 'Fevereiro': 2, 'Março': 3, 'Abril': 4, 'Maio': 5, 'Junho': 6, 
-                    'Julho': 7, 'Agosto': 8, 'Setembro': 9, 'Outubro': 10, 'Novembro': 11, 'Dezembro': 12}
+        # with col2:
+        #     # Dicionário que mapeia nomes de meses para valores numéricos
+        #     lista_meses = {'Janeiro': 1, 'Fevereiro': 2, 'Março': 3, 'Abril': 4, 'Maio': 5, 'Junho': 6, 
+        #             'Julho': 7, 'Agosto': 8, 'Setembro': 9, 'Outubro': 10, 'Novembro': 11, 'Dezembro': 12}
 
-            # Selecionar o mês
-            mes_select = st.selectbox('Mês', list(lista_meses.keys()))
+        #     # Selecionar o mês
+        #     mes_select = st.selectbox('Mês', list(lista_meses.keys()))
 
-            # Obter o valor numérico correspondente ao mês selecionado
-            mes = lista_meses[mes_select]
-            if mes < 10:
-                mes = '0'+str(mes)
-            else:
-                mes=str(mes)
+        #     # Obter o valor numérico correspondente ao mês selecionado
+        #     mes = lista_meses[mes_select]
+        #     if mes < 10:
+        #         mes = '0'+str(mes)
+        #     else:
+        #         mes=str(mes)
 
 
         # =============================================================================================
         # DEFINIÇÃO DA AMOSTRAGEM
         # =============================================================================================
 
-        with col3:
+        # with col3:
         
-            perc_amostra = st.slider('Percentual da amostra',1,100,10)
+        #     perc_amostra = st.slider('Percentual da amostra',1,100,10)
             
         # =============================================================================================
         # DOWNLOAD DOS DADOS
         # =============================================================================================
 
-        st.markdown("<hr>", unsafe_allow_html=True)                        # Linha separadora   
+        # st.markdown("<hr>", unsafe_allow_html=True)                        # Linha separadora   
+
+        # if st.button('Gerar análise'):
+
+        #     inicio = time.time()
+
+        #     with st.spinner('Baixando os dados...'):
+
+        #         st.markdown("<hr>", unsafe_allow_html=True)                        # Linha separadora   
+            
+        #         periodo = ano + mes
+        #         url = f'https://dados.anvisa.gov.br/dados/SNGPC/Industrializados/EDA_Industrializados_{periodo}.csv'
+                
+        #         response = requests.get(url)
+                
+        #         if response.status_code == 200:
+        #             # Ler o CSV a partir do conteúdo da resposta com encoding e separador personalizados
+        #             content = response.content.decode('latin-1')
+        #             df = pd.read_csv(StringIO(content), sep=';')
+                    
+        #         else:
+        #             st.error(f"Erro ao carregar dados. Código de status HTTP: {response.status_code}")
+            
+        #     fim1 = time.time()
+        #     tempo1 = fim1 - inicio
+        #     st.write(f'Tempo de download dos dados: {round(tempo1/60 , 2)} min')
+        #     st.success('Dados baixados com sucesso!')
+
+        #     # =============================================================================================
+        #     # CÓPIA E AJUSTE DOS DADOS
+        #     # =============================================================================================
+
+        #     st.markdown("<hr>", unsafe_allow_html=True)                        # Linha separadora
+        #     with st.spinner('Ajustando os dados...'):
+
+        #         # Embaralha e extrai amostra
+        #         df = df.sample(frac=perc_amostra/100)
+
+        #         # Fazendo cópia
+        #         df_aux = df.copy()
+
+        #         # # Ajuste dos dados
+        #         df = ajusta_dados(df)
+
+        #         st.write('Dataset:')
+
+        #         # Exibe os dados
+        #         st.dataframe(exibe_sample(df))
+
+        #         # Exibe o tmaanho do dataset
+        #         st.write(f'Tamanho da amostra: {df.shape}')
+
+
+        #     # =============================================================================================
+        #     # METADADOS
+        #     # =============================================================================================
+
+        #     st.markdown("<hr>", unsafe_allow_html=True)
+        #     with st.spinner('Gerando metadados...'):
+ 
+        #         col1, col2 = st.columns(2)
+
+        #         with col1:
+        #             tabs = st.tabs(["Metadados"])                                  # Criando uma única aba
+        #             with tabs[0]:                                                  # Entrando na aba
+        #                 df_report = report_data(df_aux)
+        #                 st.dataframe(df_report, hide_index=True, height=610)
+
+        #         with col2:
+        #             tabs = st.tabs(["Comentários"])                               # Criando uma única aba
+        #             with tabs[0]:
+        #                 interpretação = insight_metadados(df_report)
+        #                 st.markdown(f''' <div style="max-height: 610px; overflow-y: scroll;">
+        #                     {interpretação}
+        #                     </div> ''', unsafe_allow_html=True)
+
+
+        #     st.markdown("<hr>", unsafe_allow_html=True)                             # Linha separadora 
+        #     with st.spinner('Fazendo as análises...'):
+
+        #         # =============================================================================================
+        #         # DISTRIBUIÇÕES
+        #         # =============================================================================================
+                
+
+        #         st.subheader('Distribuições')
+
+        #         col1, col2 = st.columns(2) 
+
+        #         df_hist = replace_outliers(df)                                           # Limpando outliers
+                
+        #         with col1:                                                               # Entra na coluna 1
+
+        #             tab1, tab2, tab3 = st.tabs(["Idade", "Sexo", "Unidades por venda"])  # Criando as abas
+
+        #             with tab1:                                                           # Entrando na aba 1
+        #                 st.pyplot(plot_hist(df_hist, var='IDADE_ANOS',                   # Plota o histograma
+        #                                     figsize=(4,4), bins=50,
+        #                                     grid=True, stat='frequency',
+        #                                     title=''))
+                    
+        #             with tab3:                                                          # Entrando na aba 2
+        #                 st.pyplot(plot_hist(df_hist, var='QTD_VENDIDA',
+        #                                     figsize=(4,4), bins=50,
+        #                                     grid=True, stat='frequency',
+        #                                     title=''))
+
+        #             with tab2:                                                          # Entrando na aba 3
+        #                 st.pyplot(plot_bar(df_hist, var='SEXO',figsize=(4,4),
+        #                                 title=''))
+
+        #         with col2:                                                              # Entra na coluna 2
+        #             tabs = st.tabs(["Comentários"])                                     # Criando uma única aba
+        #             with tabs[0]:
+        #                 interpretação = insight_distribuicao(df_hist[['IDADE_ANOS']] , df_hist[['SEXO']] , df_hist[['QTD_VENDIDA']])
+        #                 st.markdown(f''' <div style="max-height: 570px; overflow-y: scroll;">
+        #                     {interpretação}
+        #                     </div> ''', unsafe_allow_html=True)
+
+        #         # =============================================================================================
+        #         # ANÁLISE GEOGRÁFICA
+        #         # =============================================================================================
+
+        #         st.markdown("<hr>", unsafe_allow_html=True)                          # Linha separadora 
+        #         st.subheader('Percentual de vendas por região')                      # Título
+        #         mapa, df_mapa = mapa_percentual_venda_por_regiao(df)                 # Chama a função do mapa
+
+        #         col1, col2 = st.columns(2)                                           # Dividir a tela em duas colunas
+
+        #         with col1:                                                           # Criando a primeira coluna
+                    
+        #             tab1, tab2 = st.tabs(["Mapa", "Gráfico"])                        # Criando as abas
+                    
+        #             with tab1:                                                       # Primeira aba
+        #                 st_folium(mapa, width=1000 , returned_objects=[]) 
+                    
+        #             with tab2:                                                       # Segunda aba
+        #                 # Dicionário para agrupar as regiões
+        #                 estado_regiao = {
+        #                     'AC': 'Norte', 'AL': 'Nordeste', 'AP': 'Norte', 'AM': 'Norte', 'BA': 'Nordeste', 'CE': 'Nordeste',
+        #                     'DF': 'Centro-Oeste','ES': 'Sudeste','GO': 'Centro-Oeste','MA': 'Nordeste','MT': 'Centro-Oeste',
+        #                     'MS': 'Centro-Oeste','MG': 'Sudeste','PA': 'Norte','PB': 'Nordeste','PR': 'Sul','PE': 'Nordeste',
+        #                     'PI': 'Nordeste','RJ': 'Sudeste','RN': 'Nordeste','RS': 'Sul','RO': 'Norte','RR': 'Norte',
+        #                     'SC': 'Sul','SP': 'Sudeste','SE': 'Nordeste','TO': 'Norte'}
+
+        #                 # Crie o DataFrame auxiliar df_aux apenas com as colunas "Região" e "Percentual de vendas".
+        #                 df_aux = pd.DataFrame(columns=['Região', '% Vendas'])
+
+        #                 # Calcule o total de vendas por região.
+        #                 total_por_regiao = df['UF_VENDA'].map(estado_regiao).value_counts().reset_index()
+        #                 total_por_regiao.columns = ['Região', 'Total_Vendas']
+
+        #                 # Calcule o percentual de vendas por região.
+        #                 total_vendas_total = df.shape[0]
+        #                 total_por_regiao['% Vendas'] = (total_por_regiao['Total_Vendas'] / total_vendas_total) * 100
+
+        #                 # Atualize o DataFrame df_aux com as informações de vendas por região.
+        #                 df_aux['Região'] = total_por_regiao['Região']
+        #                 df_aux['% Vendas'] = total_por_regiao['% Vendas']
+
+        #                 # plota o gráfico
+        #                 st.pyplot(plot_bar_2var(df_aux, var_x = 'Região', var_y= '% Vendas', figsize = (8,6), unity='%', dist = 0.1, title='PERCENTUAL DE VENDAS POR REGIÃO'))
+                        
+
+
+        #         with col2:                                                           # Criando a segunda coluna
+        #             tabs = st.tabs(["Insights"])                                     # Criando uma única aba
+        #             with tabs[0]:                                                    # Aba
+        #                 interpretação = insight_vendas_por_regiao(df_mapa)           # Chamando a função do ChatGPT   
+        #                 st.markdown(f'''
+        #                         <div style="max-height: 700px; overflow-y: scroll;">
+        #                         {interpretação}
+        #                         </div> ''', unsafe_allow_html=True)                  # Escreve a interpretação com limite de altura da caixa
+        #         # ------------------------------------------------------------------------------------------------------------------------------------------------
+                
+        #         st.markdown("<hr>", unsafe_allow_html=True)                                                             # Linha separadora 
+        #         st.subheader('Princípio ativo por região')                                                              # Título
+        #         mapa, df_mapa = mapa_principio_ativo_por_regiao(df)                                                     # Chama a função do mapa
+
+        #         col1, col2 = st.columns(2)                                                                              # Dividir a tela em duas colunas
+
+        #         with col1:                                                                                              # Criando a primeira coluna
+        #             tabs = st.tabs(["Mapa"])                                                           # Criando as abas
+        #             with tabs[0]:                                                                                          # Primeira aba
+        #                 st_folium(mapa, width=1000 , returned_objects=[]) 
+
+        #         with col2:                                                                                              # Criando a segunda coluna
+        #             tabs = st.tabs(["Insights"])                                                                        # Criando uma única aba
+        #             with tabs[0]:
+        #                 # Crie um dataset resumo com os três principais princípios ativos por região
+        #                 df_resumo = df_mapa.groupby(['REGIAO', 'PRINCIPIO_ATIVO'])['PERCENTUAL'].sum().reset_index()
+        #                 df_resumo = df_resumo.sort_values(by=['REGIAO', 'PERCENTUAL'], ascending=[True, False])
+        #                 df_resumo = df_resumo.groupby('REGIAO').head(3)                                                 # Aba
+        #                 interpretação = insight_principio_ativo_por_regiao(df_resumo)                                   # Chamando a função do ChatGPT   
+        #                 st.markdown(f''' <div style="max-height: 700px; overflow-y: scroll;">
+        #                                 {interpretação}
+        #                                 </div> ''', unsafe_allow_html=True)                                             # Escreve a interpretação com limite de altura da caixa
+
+
+        #         # ------------------------------------------------------------------------------------------------------------------------------------------------
+
+        #         st.markdown("<hr>", unsafe_allow_html=True)                          # Linha separadora 
+        #         st.subheader('Percentual de vendas por estado')                      # Título
+        #         mapa, df_mapa = mapa_venda_por_estado(df)                            # Chama a função do mapa
+
+        #         col1, col2 = st.columns(2)                                           # Dividir a tela em duas colunas
+
+        #         with col1:                                                           # Criando a primeira coluna
+        #             tab1, tab2 = st.tabs(["Mapa", "Gráfico"])                        # Criando as abas
+        #             with tab1:                                                       # Primeira aba
+        #                 st_folium(mapa, width=1000 , returned_objects=[]) 
+        #             with tab2:
+        #                 st.pyplot(plot_bar_h(df, 'UF_VENDA', figsize=(6,5), label_height=7, txt_rot='h', dist=0.3, title='', pad=0))
+
+
+
+        #         with col2:                                                           # Criando a segunda coluna
+        #             tabs = st.tabs(["Insights"])                                     # Criando uma única aba
+        #             with tabs[0]:                                                    # Aba
+        #                 interpretação = insight_vendas_por_estado(df_mapa)           # Chamando a função do ChatGPT   
+        #                 st.markdown(f'''
+        #                         <div style="max-height: 700px; overflow-y: scroll;">
+        #                         {interpretação}
+        #                         </div> ''', unsafe_allow_html=True)                  # Escreve a interpretação com limite de altura da caixa
+                
+        #         # ------------------------------------------------------------------------------------------------------------------------------------------------
+                
+        #         st.markdown("<hr>", unsafe_allow_html=True)                          # Linha separadora 
+        #         st.subheader('Princípio ativo por estado')                           # Título
+        #         mapa, df_mapa = mapa_principio_ativo_por_estado(df)                  # Chama a função do mapa
+
+        #         col1, col2 = st.columns(2)                                           # Dividir a tela em duas colunas
+
+        #         with col1:                                                           # Criando a primeira coluna
+        #             tabs = st.tabs(["Mapa"])                                         # Criando uma única aba
+        #             with tabs[0]:                                                       # Primeira aba
+        #                 st_folium(mapa, width=1000 , returned_objects=[])
+
+        #         with col2:                                                           # Criando a segunda coluna
+        #             tabs = st.tabs(["Insights"])                                     # Criando uma única aba
+        #             with tabs[0]:                                                    # Aba
+        #                 interpretação = insight_principio_ativo_por_estado(df_mapa)  # Chamando a função do ChatGPT   
+        #                 st.markdown(f'''
+        #                         <div style="max-height: 700px; overflow-y: scroll;">
+        #                         {interpretação}
+        #                         </div> ''', unsafe_allow_html=True)                  # Escreve a interpretação com limite de altura da caixa
+                    
+        #         # ----------------------------------------------------------------------------------------------
+            
+        #     st.success('Análises concluídas!')
+        #     fim2 = time.time()
+        #     tempo2 = fim2 - inicio
+        #     st.write(f'Tempo total de execução (download + análises): {round(tempo2/60 , 2)} min')
+
+
+
+# =======================================================================================================================================
+# =======================================================================================================================================
+# =======================================================================================================================================
+        
+
+
+    # elif opc == 'Carregar do computador':
+    # =============================================================================================
+    # IMPORTAÇÃO DOS DADOS
+    # =============================================================================================
+
+    inicio = time.time()
+
+    col1, col2, col3= st.columns([1,1,1])
+
+    with col1:
+
+        upload_file = st.file_uploader('Carregar dados', type=['csv'])
+
+    with col2:
+        separador = st.selectbox("Escolha o separador", [",", ";", "\t", "|"])
+        encoding = st.selectbox("Escolha o encoding", ["latin-1","utf-8", "ISO-8859-1", "cp1252"])
+
+
+    # =============================================================================================
+    # DEFINIÇÃO DA AMOSTRAGEM
+    # =============================================================================================
+
+    with col3:
+    
+        perc_amostra = st.slider('Percentual da amostra',1,100,10)
+        
+    # =============================================================================================
+    # DOWNLOAD DOS DADOS
+    # =============================================================================================
+
+    st.markdown("<hr>", unsafe_allow_html=True)                        # Linha separadora   
+    
+    # Verifica se o dataset foi carregado
+    if upload_file:
 
         if st.button('Gerar análise'):
 
-            inicio = time.time()
+            df = pd.read_csv(upload_file, encoding=encoding , sep=separador)
 
-            with st.spinner('Baixando os dados...'):
-
-                st.markdown("<hr>", unsafe_allow_html=True)                        # Linha separadora   
-            
-                periodo = ano + mes
-                url = f'https://dados.anvisa.gov.br/dados/SNGPC/Industrializados/EDA_Industrializados_{periodo}.csv'
-                
-                response = requests.get(url)
-                
-                if response.status_code == 200:
-                    # Ler o CSV a partir do conteúdo da resposta com encoding e separador personalizados
-                    content = response.content.decode('latin-1')
-                    df = pd.read_csv(StringIO(content), sep=';')
-                    
-                else:
-                    st.error(f"Erro ao carregar dados. Código de status HTTP: {response.status_code}")
-            
-            fim1 = time.time()
-            tempo1 = fim1 - inicio
-            st.write(f'Tempo de download dos dados: {round(tempo1/60 , 2)} min')
-            st.success('Dados baixados com sucesso!')
+            st.success('Dados carregados com sucesso!')
 
             # =============================================================================================
             # CÓPIA E AJUSTE DOS DADOS
@@ -1167,7 +1438,7 @@ def main():
 
             st.markdown("<hr>", unsafe_allow_html=True)
             with st.spinner('Gerando metadados...'):
- 
+
                 col1, col2 = st.columns(2)
 
                 with col1:
@@ -1320,6 +1591,7 @@ def main():
                     with tab1:                                                       # Primeira aba
                         st_folium(mapa, width=1000 , returned_objects=[]) 
                     with tab2:
+                        # st.pyplot(plot_bar(df, 'UF_VENDA', figsize=(12,10), label_height=11, txt_rot='v', dist=0.3, title='PERCENTUAL DE VENDAS POR ESTADO'))
                         st.pyplot(plot_bar_h(df, 'UF_VENDA', figsize=(6,5), label_height=7, txt_rot='h', dist=0.3, title='', pad=0))
 
 
@@ -1343,8 +1615,8 @@ def main():
 
                 with col1:                                                           # Criando a primeira coluna
                     tabs = st.tabs(["Mapa"])                                         # Criando uma única aba
-                    with tabs[0]:                                                       # Primeira aba
-                        st_folium(mapa, width=1000 , returned_objects=[])
+                    with tabs[0]:                                                    # Primeira aba
+                        st_folium(mapa, width=1000 , returned_objects=[]) 
 
                 with col2:                                                           # Criando a segunda coluna
                     tabs = st.tabs(["Insights"])                                     # Criando uma única aba
@@ -1358,285 +1630,9 @@ def main():
                 # ----------------------------------------------------------------------------------------------
             
             st.success('Análises concluídas!')
-            fim2 = time.time()
-            tempo2 = fim2 - inicio
-            st.write(f'Tempo total de execução (download + análises): {round(tempo2/60 , 2)} min')
-
-
-
-# =======================================================================================================================================
-# =======================================================================================================================================
-# =======================================================================================================================================
-        
-
-
-    elif opc == 'Carregar do computador':
-
-        # IMPORTAÇÃO DOS DADOS
-        # =============================================================================================
-    
-        inicio = time.time()
-
-        col1, col2, col3= st.columns([1,1,1])
-
-        with col1:
-
-            upload_file = st.file_uploader('Carregar dados', type=['csv'])
-
-        with col2:
-            separador = st.selectbox("Escolha o separador", [",", ";", "\t", "|"])
-            encoding = st.selectbox("Escolha o encoding", ["latin-1","utf-8", "ISO-8859-1", "cp1252"])
-
-
-        # =============================================================================================
-        # DEFINIÇÃO DA AMOSTRAGEM
-        # =============================================================================================
-
-        with col3:
-        
-            perc_amostra = st.slider('Percentual da amostra',1,100,10)
-            
-        # =============================================================================================
-        # DOWNLOAD DOS DADOS
-        # =============================================================================================
-
-        st.markdown("<hr>", unsafe_allow_html=True)                        # Linha separadora   
-        
-        # Verifica se o dataset foi carregado
-        if upload_file:
-
-            if st.button('Gerar análise'):
-
-                df = pd.read_csv(upload_file, encoding=encoding , sep=separador)
-
-                st.success('Dados carregados com sucesso!')
-
-                # =============================================================================================
-                # CÓPIA E AJUSTE DOS DADOS
-                # =============================================================================================
-
-                st.markdown("<hr>", unsafe_allow_html=True)                        # Linha separadora
-                with st.spinner('Ajustando os dados...'):
-
-                    # Embaralha e extrai amostra
-                    df = df.sample(frac=perc_amostra/100)
-
-                    # Fazendo cópia
-                    df_aux = df.copy()
-
-                    # # Ajuste dos dados
-                    df = ajusta_dados(df)
-
-                    st.write('Dataset:')
-
-                    # Exibe os dados
-                    st.dataframe(exibe_sample(df))
-
-                    # Exibe o tmaanho do dataset
-                    st.write(f'Tamanho da amostra: {df.shape}')
-
-
-                # =============================================================================================
-                # METADADOS
-                # =============================================================================================
-
-                st.markdown("<hr>", unsafe_allow_html=True)
-                with st.spinner('Gerando metadados...'):
-    
-                    col1, col2 = st.columns(2)
-
-                    with col1:
-                        tabs = st.tabs(["Metadados"])                                  # Criando uma única aba
-                        with tabs[0]:                                                  # Entrando na aba
-                            df_report = report_data(df_aux)
-                            st.dataframe(df_report, hide_index=True, height=610)
-
-                    with col2:
-                        tabs = st.tabs(["Comentários"])                               # Criando uma única aba
-                        with tabs[0]:
-                            interpretação = insight_metadados(df_report)
-                            st.markdown(f''' <div style="max-height: 610px; overflow-y: scroll;">
-                                {interpretação}
-                                </div> ''', unsafe_allow_html=True)
-
-
-                st.markdown("<hr>", unsafe_allow_html=True)                             # Linha separadora 
-                with st.spinner('Fazendo as análises...'):
-
-                    # =============================================================================================
-                    # DISTRIBUIÇÕES
-                    # =============================================================================================
-                    
-
-                    st.subheader('Distribuições')
-
-                    col1, col2 = st.columns(2) 
-
-                    df_hist = replace_outliers(df)                                           # Limpando outliers
-                    
-                    with col1:                                                               # Entra na coluna 1
-
-                        tab1, tab2, tab3 = st.tabs(["Idade", "Sexo", "Unidades por venda"])  # Criando as abas
-
-                        with tab1:                                                           # Entrando na aba 1
-                            st.pyplot(plot_hist(df_hist, var='IDADE_ANOS',                   # Plota o histograma
-                                                figsize=(4,4), bins=50,
-                                                grid=True, stat='frequency',
-                                                title=''))
-                        
-                        with tab3:                                                          # Entrando na aba 2
-                            st.pyplot(plot_hist(df_hist, var='QTD_VENDIDA',
-                                                figsize=(4,4), bins=50,
-                                                grid=True, stat='frequency',
-                                                title=''))
-
-                        with tab2:                                                          # Entrando na aba 3
-                            st.pyplot(plot_bar(df_hist, var='SEXO',figsize=(4,4),
-                                            title=''))
-
-                    with col2:                                                              # Entra na coluna 2
-                        tabs = st.tabs(["Comentários"])                                     # Criando uma única aba
-                        with tabs[0]:
-                            interpretação = insight_distribuicao(df_hist[['IDADE_ANOS']] , df_hist[['SEXO']] , df_hist[['QTD_VENDIDA']])
-                            st.markdown(f''' <div style="max-height: 570px; overflow-y: scroll;">
-                                {interpretação}
-                                </div> ''', unsafe_allow_html=True)
-
-                    # =============================================================================================
-                    # ANÁLISE GEOGRÁFICA
-                    # =============================================================================================
-
-                    st.markdown("<hr>", unsafe_allow_html=True)                          # Linha separadora 
-                    st.subheader('Percentual de vendas por região')                      # Título
-                    mapa, df_mapa = mapa_percentual_venda_por_regiao(df)                 # Chama a função do mapa
-
-                    col1, col2 = st.columns(2)                                           # Dividir a tela em duas colunas
-
-                    with col1:                                                           # Criando a primeira coluna
-                        
-                        tab1, tab2 = st.tabs(["Mapa", "Gráfico"])                        # Criando as abas
-                        
-                        with tab1:                                                       # Primeira aba
-                            st_folium(mapa, width=1000 , returned_objects=[]) 
-                        
-                        with tab2:                                                       # Segunda aba
-                            # Dicionário para agrupar as regiões
-                            estado_regiao = {
-                                'AC': 'Norte', 'AL': 'Nordeste', 'AP': 'Norte', 'AM': 'Norte', 'BA': 'Nordeste', 'CE': 'Nordeste',
-                                'DF': 'Centro-Oeste','ES': 'Sudeste','GO': 'Centro-Oeste','MA': 'Nordeste','MT': 'Centro-Oeste',
-                                'MS': 'Centro-Oeste','MG': 'Sudeste','PA': 'Norte','PB': 'Nordeste','PR': 'Sul','PE': 'Nordeste',
-                                'PI': 'Nordeste','RJ': 'Sudeste','RN': 'Nordeste','RS': 'Sul','RO': 'Norte','RR': 'Norte',
-                                'SC': 'Sul','SP': 'Sudeste','SE': 'Nordeste','TO': 'Norte'}
-
-                            # Crie o DataFrame auxiliar df_aux apenas com as colunas "Região" e "Percentual de vendas".
-                            df_aux = pd.DataFrame(columns=['Região', '% Vendas'])
-
-                            # Calcule o total de vendas por região.
-                            total_por_regiao = df['UF_VENDA'].map(estado_regiao).value_counts().reset_index()
-                            total_por_regiao.columns = ['Região', 'Total_Vendas']
-
-                            # Calcule o percentual de vendas por região.
-                            total_vendas_total = df.shape[0]
-                            total_por_regiao['% Vendas'] = (total_por_regiao['Total_Vendas'] / total_vendas_total) * 100
-
-                            # Atualize o DataFrame df_aux com as informações de vendas por região.
-                            df_aux['Região'] = total_por_regiao['Região']
-                            df_aux['% Vendas'] = total_por_regiao['% Vendas']
-
-                            # plota o gráfico
-                            st.pyplot(plot_bar_2var(df_aux, var_x = 'Região', var_y= '% Vendas', figsize = (8,6), unity='%', dist = 0.1, title='PERCENTUAL DE VENDAS POR REGIÃO'))
-                            
-
-
-                    with col2:                                                           # Criando a segunda coluna
-                        tabs = st.tabs(["Insights"])                                     # Criando uma única aba
-                        with tabs[0]:                                                    # Aba
-                            interpretação = insight_vendas_por_regiao(df_mapa)           # Chamando a função do ChatGPT   
-                            st.markdown(f'''
-                                    <div style="max-height: 700px; overflow-y: scroll;">
-                                    {interpretação}
-                                    </div> ''', unsafe_allow_html=True)                  # Escreve a interpretação com limite de altura da caixa
-                    # ------------------------------------------------------------------------------------------------------------------------------------------------
-                    
-                    st.markdown("<hr>", unsafe_allow_html=True)                                                             # Linha separadora 
-                    st.subheader('Princípio ativo por região')                                                              # Título
-                    mapa, df_mapa = mapa_principio_ativo_por_regiao(df)                                                     # Chama a função do mapa
-
-                    col1, col2 = st.columns(2)                                                                              # Dividir a tela em duas colunas
-
-                    with col1:                                                                                              # Criando a primeira coluna
-                        tabs = st.tabs(["Mapa"])                                                           # Criando as abas
-                        with tabs[0]:                                                                                          # Primeira aba
-                            st_folium(mapa, width=1000 , returned_objects=[]) 
-
-                    with col2:                                                                                              # Criando a segunda coluna
-                        tabs = st.tabs(["Insights"])                                                                        # Criando uma única aba
-                        with tabs[0]:
-                            # Crie um dataset resumo com os três principais princípios ativos por região
-                            df_resumo = df_mapa.groupby(['REGIAO', 'PRINCIPIO_ATIVO'])['PERCENTUAL'].sum().reset_index()
-                            df_resumo = df_resumo.sort_values(by=['REGIAO', 'PERCENTUAL'], ascending=[True, False])
-                            df_resumo = df_resumo.groupby('REGIAO').head(3)                                                 # Aba
-                            interpretação = insight_principio_ativo_por_regiao(df_resumo)                                   # Chamando a função do ChatGPT   
-                            st.markdown(f''' <div style="max-height: 700px; overflow-y: scroll;">
-                                            {interpretação}
-                                            </div> ''', unsafe_allow_html=True)                                             # Escreve a interpretação com limite de altura da caixa
-
-
-                    # ------------------------------------------------------------------------------------------------------------------------------------------------
-
-                    st.markdown("<hr>", unsafe_allow_html=True)                          # Linha separadora 
-                    st.subheader('Percentual de vendas por estado')                      # Título
-                    mapa, df_mapa = mapa_venda_por_estado(df)                            # Chama a função do mapa
-
-                    col1, col2 = st.columns(2)                                           # Dividir a tela em duas colunas
-
-                    with col1:                                                           # Criando a primeira coluna
-                        tab1, tab2 = st.tabs(["Mapa", "Gráfico"])                        # Criando as abas
-                        with tab1:                                                       # Primeira aba
-                            st_folium(mapa, width=1000 , returned_objects=[]) 
-                        with tab2:
-                            # st.pyplot(plot_bar(df, 'UF_VENDA', figsize=(12,10), label_height=11, txt_rot='v', dist=0.3, title='PERCENTUAL DE VENDAS POR ESTADO'))
-                            st.pyplot(plot_bar_h(df, 'UF_VENDA', figsize=(6,5), label_height=7, txt_rot='h', dist=0.3, title='', pad=0))
-
-
-
-                    with col2:                                                           # Criando a segunda coluna
-                        tabs = st.tabs(["Insights"])                                     # Criando uma única aba
-                        with tabs[0]:                                                    # Aba
-                            interpretação = insight_vendas_por_estado(df_mapa)           # Chamando a função do ChatGPT   
-                            st.markdown(f'''
-                                    <div style="max-height: 700px; overflow-y: scroll;">
-                                    {interpretação}
-                                    </div> ''', unsafe_allow_html=True)                  # Escreve a interpretação com limite de altura da caixa
-                    
-                    # ------------------------------------------------------------------------------------------------------------------------------------------------
-                    
-                    st.markdown("<hr>", unsafe_allow_html=True)                          # Linha separadora 
-                    st.subheader('Princípio ativo por estado')                           # Título
-                    mapa, df_mapa = mapa_principio_ativo_por_estado(df)                  # Chama a função do mapa
-
-                    col1, col2 = st.columns(2)                                           # Dividir a tela em duas colunas
-
-                    with col1:                                                           # Criando a primeira coluna
-                        tabs = st.tabs(["Mapa"])                                         # Criando uma única aba
-                        with tabs[0]:                                                    # Primeira aba
-                            st_folium(mapa, width=1000 , returned_objects=[]) 
-
-                    with col2:                                                           # Criando a segunda coluna
-                        tabs = st.tabs(["Insights"])                                     # Criando uma única aba
-                        with tabs[0]:                                                    # Aba
-                            interpretação = insight_principio_ativo_por_estado(df_mapa)  # Chamando a função do ChatGPT   
-                            st.markdown(f'''
-                                    <div style="max-height: 700px; overflow-y: scroll;">
-                                    {interpretação}
-                                    </div> ''', unsafe_allow_html=True)                  # Escreve a interpretação com limite de altura da caixa
-                        
-                    # ----------------------------------------------------------------------------------------------
-                
-                st.success('Análises concluídas!')
-                fim = time.time()
-                tempo = fim - inicio
-                st.write(f'Tempo total de execução (upload + análises): {round(tempo/60 , 2)} min')
+            fim = time.time()
+            tempo = fim - inicio
+            st.write(f'Tempo total de execução (upload + análises): {round(tempo/60 , 2)} min')
 
 if __name__ == "__main__":
     main()
