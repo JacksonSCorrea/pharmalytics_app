@@ -1041,7 +1041,7 @@ def main():
     
     # Título
     st.title('Pharmalytics app')
-    st.subheader("Automação em Análise de vendas   :bar_chart:   :pill:")
+    st.subheader("Automação em Análise de vendas de medicamentos   :bar_chart:   :pill:")
     
     st.markdown("<hr>", unsafe_allow_html=True)                        # Linha separadora
 
@@ -1051,6 +1051,7 @@ def main():
                unsafe_allow_html=True)
     
     openai.api_key = st.text_input("Digite sua API Key da OpenAI", type='password')
+    
 
     st.markdown("<hr>", unsafe_allow_html=True)                        # Linha separadora
 
@@ -1395,6 +1396,8 @@ def main():
     # =============================================================================================
     # DOWNLOAD DOS DADOS
     # =============================================================================================
+    
+    st.write("""Faça download previamente dos dados através do <a href='https://dados.gov.br/dados/conjuntos-dados/venda-de-medicamentos-controlados-e-antimicrobianos---medicamentos-industrializados' target='_blank'>Portal de Dados Abertos do Governo Federal</a> e crie amostras de até 200Mb<br>""" , unsafe_allow_html=True)
 
     st.markdown("<hr>", unsafe_allow_html=True)                        # Linha separadora   
     
