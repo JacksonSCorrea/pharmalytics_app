@@ -2,6 +2,10 @@
 
 ## Aplicação Web para Análise de Vendas Farmacêuticas.
 
+--
+Link de acesso: https://pharmalytics-app.streamlit.app/
+--
+
 Este projeto contempla o MVP (minimun value product) para automação da Análise Vendas Farmacêuticas.
 
 Sua utilização consiste em carregar uma amostra da base de alguma base de dadosdisponibilizada
